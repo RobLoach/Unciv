@@ -311,7 +311,7 @@ object UnitActionsFromUniques {
             for (improvement in improvements) {
                 // Try to skip Improvements we can never build
                 // (getImprovementBuildingProblems catches those so the button is always disabled, but it nevertheless looks nicer)
-                if (tile.improvementFunctions.getImprovementBuildingProblems(improvement, unit.civ).any { it.permanent })
+                if (tile.improvementFunctions.getImprovementBuildingProblems(improvement, unit.civ, unit = unit).any { it.permanent })
                     continue
 
                 val resourcesAvailable = improvement.getMatchingUniques(UniqueType.ConsumesResources).none { improvementUnique ->
@@ -335,7 +335,7 @@ object UnitActionsFromUniques {
                     }.takeIf {
                         resourcesAvailable
                             && unit.hasMovement()
-                            && tile.improvementFunctions.canBuildImprovement(improvement, unit.civ)
+                            && tile.improvementFunctions.canBuildImprovement(improvement, unit.civ, unit = unit)
                             // Next test is to prevent interfering with UniqueType.CreatesOneImprovement -
                             // not pretty, but users *can* remove the building from the city queue an thus clear this:
                             && !tile.isMarkedForCreatesOneImprovement()

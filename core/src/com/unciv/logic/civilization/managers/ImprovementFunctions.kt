@@ -1,6 +1,7 @@
 package com.unciv.logic.civilization.managers
 
 import com.unciv.logic.civilization.Civilization
+import com.unciv.logic.map.mapunit.MapUnit
 import com.unciv.logic.map.tile.ImprovementBuildingProblem
 import com.unciv.logic.map.tile.Tile
 import com.unciv.models.ruleset.tile.TileImprovement
@@ -12,8 +13,8 @@ object ImprovementFunctions {
     /** Generates a sequence of reasons that prevent building given [improvement].
      *  If the sequence is empty, improvement can be built immediately.
      */
-    fun getImprovementBuildingProblems(improvement: TileImprovement, civInfo: Civilization, tile: Tile? = null): Sequence<ImprovementBuildingProblem> = sequence {
-        val stateForConditionals = StateForConditionals(civInfo, tile = tile)
+    fun getImprovementBuildingProblems(improvement: TileImprovement, civInfo: Civilization, tile: Tile? = null, unit: MapUnit? = null): Sequence<ImprovementBuildingProblem> = sequence {
+        val stateForConditionals = StateForConditionals(civInfo, tile = tile, unit = unit)
 
         if (improvement.uniqueTo != null && !civInfo.matchesFilter(improvement.uniqueTo!!))
             yield(ImprovementBuildingProblem.WrongCiv)
