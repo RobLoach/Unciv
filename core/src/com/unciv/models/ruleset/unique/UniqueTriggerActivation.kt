@@ -1123,6 +1123,29 @@ object UniqueTriggerActivation {
                 }
             }
 
+            UniqueType.OneTimePutResourcesOnTile -> {
+                if (tile == null) return null
+                println("AFSDAFSD")
+                val positiveAmount = unique.params[0].toIntOrNull() ?: return null
+                val resource = ruleset.tileResources[unique.params[1]] ?: return null
+                if (!resource.isAllowedOn(tile)) return null
+                return {
+                    tile.resource = resource.name
+                    tile.resourceAmount = positiveAmount
+                    true
+                }
+            }
+
+            UniqueType.OneTimePutImprovementOnTile -> {
+                if (tile == null) return null
+                val improvement = ruleset.tileImprovements[unique.params[0]] ?: return null
+                if (!improvement.isAllowedOn(tile)) return null
+                return {
+                    tile.setImprovement(improvement.name, stateForConditionals.civInfo, stateForConditionals.unit)
+                    true
+                }
+            }
+
             UniqueType.OneTimeChangeTerrain -> {
                 if (tile == null) return null
                 val terrain = ruleset.terrains[unique.params[0]] ?: return null

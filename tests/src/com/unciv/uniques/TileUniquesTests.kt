@@ -40,4 +40,29 @@ class TileUniquesTests {
         Assert.assertTrue("Pillaging should transfer gold to the civ", civInfo.gold == 20)
         Assert.assertTrue("Pillaging should transfer food to the nearest city", city.population.foodStored == 11)
     }
+
+    @Test
+    fun oneTimePutResourcesOnTileTest() {
+        game.makeHexagonalMap(2)
+
+        val tile = game.setTileTerrain(Vector2.Zero, Constants.plains)
+        val unit = game.addDefaultMeleeUnitWithUniques(game.addCiv(), tile, "Put [42] [Wheat] resources on this tile <by consuming this unit>")
+        unit.consume()
+
+        val assertTile = game.getTile(Vector2.Zero)
+
+        Assert.assertEquals("Tile should have Wheat resource", "Wheat", assertTile.tileResource.name)
+        Assert.assertEquals("Tile should have 42 Wheat resources", 42, assertTile.resourceAmount)
+    }
+
+//     @Test
+//     fun oneTimePutImprovementOnTileTest() {
+//         game.makeHexagonalMap(2)
+
+//         val tile = game.setTileTerrain(Vector2.Zero, Constants.plains)
+//         val testResource = game.createResource("Put [Farm] improvement on this tile")
+//         tile.setTileResource(testResource)
+
+//         Assert.assertEquals("Tile should have a Farm improvement", "Farm", tile.improvement)
+//     }
 }

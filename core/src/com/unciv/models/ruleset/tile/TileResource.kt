@@ -219,6 +219,14 @@ class TileResource : RulesetStatsObject(), GameResource {
         return true
     }
 
+    /** Retrieves whether or not the resource is allowed on the given tile. */
+    fun isAllowedOn(tile: Tile): Boolean {
+        if (tile.lastTerrain.name !in terrainsCanBeFoundOn) return false
+        val stateForConditionals = StateForConditionals(tile = tile)
+        if (tile.allTerrains.any { it.hasUnique(UniqueType.BlocksResources, stateForConditionals) }) return false
+        return true
+    }
+
     class DepositAmount {
         var sparse: Int = 1
         var default: Int = 2

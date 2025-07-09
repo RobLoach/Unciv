@@ -5,6 +5,7 @@ import com.unciv.logic.MultiFilter
 import com.unciv.logic.civilization.Civilization
 import com.unciv.logic.map.mapunit.MapUnit
 import com.unciv.logic.map.tile.RoadStatus
+import com.unciv.logic.map.tile.Tile
 import com.unciv.models.ruleset.Ruleset
 import com.unciv.models.ruleset.RulesetStatsObject
 import com.unciv.models.ruleset.unique.StateForConditionals
@@ -74,7 +75,16 @@ class TileImprovement : RulesetStatsObject() {
     fun isAllowedOnFeature(terrain: Terrain) = canBeBuiltOn(terrain)
         || getMatchingUniques(UniqueType.NoFeatureRemovalNeeded).any { terrain.matchesFilter(it.params[0]) }
 
-
+    /** Retrieves whether or not the improvement is allowed on the given tile. */
+    fun isAllowedOn(tile: Tile): Boolean {
+        if (tile.terrainFeatures.any { !canBeBuiltOn(it) }) return false
+        // if (hasUnique(UniqueType.CanOnlyImproveResource)) {
+        //     val resourceName = tile.resource ?: return false
+        //     val resource = ruleset.tileResources[unique.params[1]] ?: return null
+        //     if (!resource.isImprovedBy(name)) return false
+        // }
+        return true
+    }
 
     /** Implements [UniqueParameterType.ImprovementFilter][com.unciv.models.ruleset.unique.UniqueParameterType.ImprovementFilter] */
     fun matchesFilter(filter: String, tileState: StateForConditionals? = null, multiFilter: Boolean = true): Boolean {
