@@ -8,6 +8,7 @@ import com.unciv.models.translations.equalsPlaceholderText
 import com.unciv.models.translations.fillPlaceholders
 import com.unciv.models.translations.getPlaceholderParameters
 import com.unciv.models.translations.getPlaceholderText
+import com.unciv.logic.civilization.Civilization
 import yairm210.purity.annotations.Readonly
 import org.jetbrains.annotations.VisibleForTesting
 
@@ -254,6 +255,9 @@ enum class Countables(
     val placeholderText = text.getPlaceholderText()
     open val matchesWithRuleset = false
 
+    open val noModifiers = !text.contains('<')
+    var unique: Unique? = null
+
     @VisibleForTesting
     open val noPlaceholders = !text.contains('[')
 
@@ -283,6 +287,40 @@ enum class Countables(
                 .mapNotNull { UniqueParameterType.safeValueOf(it)?.docExample }
             return text.fillPlaceholders(*placeholderParams.toTypedArray())
         }
+
+    protected fun getMatchingCivs(parameterText: String, gameContext: GameContext): List<Civilization> {
+        if (noModifiers) {
+            if (gameContext.civInfo != null) {
+                return listOf(gameContext.civInfo)
+            }
+            else {
+                return emptyList<Civilization>()
+            }
+        }
+
+        if (unique == null) {
+            unique = Unique(parameterText)
+        }
+
+        if (unique?.hasModifier(UniqueType.ConditionalCivFilter) == true) {
+            val conditionalCivModifier = unique.getModifiers(UniqueType.ConditionalCivFilter)
+            if (gameContext.gameInfo?.civilizations.isNullOrEmpty()) {
+                if (modifier.conditionalsApply(gameContext.civInfo)) {
+                    return listOf(gameContext.civInfo)
+                }
+                else {
+                    return emptyList()
+                }
+            }
+
+            return gameContext.gameInfo?.civilizations.filter { civ ->
+                conditionalCivModifier.all { modifier ->
+                    modifier.conditionalsApply(civ)
+                }
+            }
+        }
+        return listOf(gameContext.civInfo)
+    }
 
     /** Leave this only for Countables without any parameters - they can rely on [matches] having validated enough */
     open fun getErrorSeverity(parameterText: String, ruleset: Ruleset): UniqueType.UniqueParameterErrorSeverity? = null
