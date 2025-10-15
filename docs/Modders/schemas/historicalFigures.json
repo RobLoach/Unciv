@@ -8,16 +8,16 @@
         "type": "string",
         "description": "The name of the historical figure group. For example: Scientist."
       },
-      "names": {
+      "figures": {
         "type": "array",
-        "description": "A list of names that apply to the group. For example: Alan Turing.",
+        "description": "A list of figure names that apply to the group. For example: Alan Turing.",
         "items": { "type": "string" }
       },
       "uniques": { "$ref": "https://raw.githubusercontent.com/yairm210/Unciv/master/docs/Modders/schemas/uniques.json" },
       "civilopediaText": { "$ref": "https://raw.githubusercontent.com/yairm210/Unciv/master/docs/Modders/schemas/civilopediaText.json" }
     },
     "required": [
-      "name", "names"
+      "name"
     ],
     "additionalProperties": false
   }

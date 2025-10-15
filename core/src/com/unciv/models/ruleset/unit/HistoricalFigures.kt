@@ -12,8 +12,8 @@ import com.unciv.ui.screens.civilopediascreen.FormattedLine
 import com.unciv.ui.screens.pickerscreens.PromotionPickerScreen
 
 class HistoricalFigures : RulesetObject() {
-    /** A list of names available for this historical figure group. */
-    var names = ArrayList<String>()
+    /** A list of figure names available for this historical figure group. */
+    var figures = ArrayList<String>()
 
     fun clone(): HistoricalFigures {
         val newHistoricalFigures = HistoricalFigures()
@@ -23,7 +23,7 @@ class HistoricalFigures : RulesetObject() {
         newHistoricalFigures.uniques = uniques
 
         // HistoricalFigures fields
-        newHistoricalFigures.names = names
+        newHistoricalFigures.figures = figures
         return newHistoricalFigures
     }
 
@@ -52,12 +52,12 @@ class HistoricalFigures : RulesetObject() {
             }
         }
 
-        // Names
-        if (names.isNotEmpty()) {
+        // Figures
+        if (figures.isNotEmpty()) {
             lines.add(FormattedLine())
             lines.add(FormattedLine("Historical Figures", header = 4))
-            for (name in names) {   
-                lines.add(FormattedLine(name))
+            for (figure in figures) {   
+                lines.add(FormattedLine(figure))
             }
         }
 

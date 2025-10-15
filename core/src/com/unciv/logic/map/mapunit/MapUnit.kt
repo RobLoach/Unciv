@@ -1139,13 +1139,13 @@ class MapUnit : IsPartOfGameInfoSerialization {
                     it.getMatchingUniques(UniqueType.Unavailable, GameContext.IgnoreConditionals)
                         .none { unique -> unique.conditionalsApply(cache.state) }
                 }
-                .flatMap { hf -> 
-                    // Grab only names that haven't been taken
-                    hf.names.filter {
-                        name -> name !in civ.gameInfo.historicalFiguresTaken
+                .flatMap { historicalFigure -> 
+                    // Grab only figures that haven't been taken
+                    historicalFigure.figures.filter { figure ->
+                        figure !in civ.gameInfo.historicalFiguresTaken
                     }
                     // Make a pair of the name and the historical figure instance
-                    .map { it to hf }
+                    .map { it to historicalFigure }
                 }
                 .shuffled().firstOrNull()
             if (pair != null) {
