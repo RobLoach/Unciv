@@ -10,6 +10,7 @@ import com.unciv.ui.objectdescriptions.uniquesToCivilopediaTextLines
 import com.unciv.ui.objectdescriptions.uniquesToDescription
 import com.unciv.ui.screens.civilopediascreen.FormattedLine
 import com.unciv.ui.screens.pickerscreens.PromotionPickerScreen
+import yairm210.purity.annotations.Readonly
 
 class HistoricalFigures : RulesetObject() {
     /** A list of figure names available for this historical figure group. */
@@ -30,6 +31,7 @@ class HistoricalFigures : RulesetObject() {
     /**
      * Retrieve a list of units that match this historical figure instance.
      */
+    @Readonly
     fun getUnits(ruleset: Ruleset) = ruleset.units.values.filter { unit ->
         unit.getMatchingUniques(UniqueType.CanBeAHistoricalFigure).any { unique ->
             // Match by using either the direct name, or a tag
@@ -48,7 +50,7 @@ class HistoricalFigures : RulesetObject() {
         if (units.isNotEmpty()) {
             lines.add(FormattedLine("Units", header = 4))
             for (unit in units) {
-                lines.add(FormattedLine(unit.name, link = "Unit/${unit.name}"))
+                lines.add(FormattedLine(unit.name, link = unit.makeLink()))
             }
         }
 
