@@ -1,3 +1,6 @@
 {
-    "isBaseRuleset": true,
+    "isBaseRuleset": false,
+    "uniques": [
+        "Mod requires [Civ V - Vanilla]"
+    ]
 }

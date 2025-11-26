@@ -420,7 +420,7 @@
 			},
 			{
 				"name": "Telegraph",
-				"row": 4,
+				"row": 9,
 				"prerequisites": ["Electricity"],
 				"quote": "'I once sent a dozen of my friends a telegram saying 'flee at once-all is discovered!' They all left town immediately.' - Mark Twain"
 			},
@@ -471,7 +471,7 @@
 			},
 			{
 				"name": "Mass Media",
-				"row": 5,
+				"row": 12,
 				"prerequisites": ["Radio"],
 				"quote": "'The speed of communications is wondrous to behold, it is also true that speed does multiply the distribution of information that we know to be untrue.' – Edward R. Murrow"
 			},

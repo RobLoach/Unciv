@@ -1,0 +1,28 @@
+[
+    {
+        "name":"Tutorial Task: [Move unit]",
+        "presentation":"Floating",
+        "civilopediaText":[
+			{"text":"Move a unit!", "centered":true},
+            {"extraImage":"Tutorials/Move unit", "imageSize":140},
+            {"text":"Click on a unit → Click on a destination → Click the arrow popup."},
+		],
+        "uniques": [
+            "Only available <if tutorials are enabled> <when number of [Units] is more than [0]>",
+            "Unavailable <if tutorial [Move unit] is completed>"
+        ]
+    },
+    {
+        "name":"Tutorial Task: [Found city]",
+        "presentation":"Floating",
+        "civilopediaText":[
+			{"text":"Found a city!", "centered":true},
+            {"extraImage":"Tutorials/Found city", "imageSize":140},
+            {"text":"Select the Settler → Click on 'Found city'."},
+		],
+        "uniques": [
+            "Only available <if tutorials are enabled> <when number of [[Settler] Units] is more than [0]>",
+            "Unavailable <if tutorial [Found city] is completed>"
+        ]
+    }
+]
