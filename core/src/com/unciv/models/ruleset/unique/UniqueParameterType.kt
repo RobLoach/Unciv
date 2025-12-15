@@ -527,6 +527,13 @@ enum class UniqueParameterType(
         }
     },
 
+    /** Used by [UniqueType.CityOwnershipAction] */
+    AnnexOrPuppet("annexOrPuppet", "Annex", "`Annex` or `Puppet`", "City Action Filters",
+        severityDefault = UniqueType.UniqueParameterErrorSeverity.RulesetInvariant
+    ) {
+        override val staticKnownValues = setOf("Annex", "Puppet")
+    },
+
     /** Used by [UniqueType.FreeExtraBeliefs] and its any variant, see ReligionManager.getBeliefsToChooseAt* functions */
     FoundingOrEnhancing("foundingOrEnhancing", "founding", "`founding` or `enhancing`", "Prophet Action Filters",
         severityDefault = UniqueType.UniqueParameterErrorSeverity.RulesetInvariant

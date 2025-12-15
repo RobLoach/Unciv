@@ -893,6 +893,7 @@ enum class UniqueType(
     PlaySound("Play [comment] sound", UniqueTarget.Triggerable, flags = UniqueFlag.setOfHiddenToUsers,
         docDescription = "See [Images and Audio](Images-and-Audio.md#sounds) for a list of available sounds."),
     GetLeaderTitle("Get the leader title of [leaderTitle]", UniqueTarget.Triggerable, flags = UniqueFlag.setOfHiddenToUsers),
+    AnnexOrPuppetCity("[annexOrPuppet] [nationFilter] city", UniqueTarget.Triggerable),
 
     //endregion
     

@@ -365,6 +365,41 @@ object UniqueTriggerActivation {
                 }
             }
 
+            UniqueType.AnnexOrPuppetCity -> {
+                val annexOrPuppet = unique.params[0]
+                val nationFilter = unique.params[1]
+                if (tile == null) return null
+                val targetCity = tile.getCity()
+                if (targetCity == null) return null
+                if (targetCity.civ == civInfo || !targetCity.civ.matchesFilter(nationFilter)) return null
+
+                return {
+                    val oldCiv = targetCity.civ
+                    when (annexOrPuppet) {
+                        "Annex" -> {
+                            targetCity.annexCity()
+                            targetCity.moveToCiv(civInfo)
+                        }
+                        "Puppet" -> targetCity.puppetCity(civInfo)
+                    }
+
+                    // Take control of all the old Civ's units if they have no more cities
+                    if (oldCiv.cities.isEmpty()) {
+                        oldCiv.units.getCivUnits().forEach { it.capturedBy(civInfo) }
+                    }
+
+                    if (notification != null) {
+                        civInfo.addNotification(
+                            notification,
+                            LocationAction(targetCity.location.toHexCoord()),
+                            NotificationCategory.Cities,
+                            NotificationIcon.City
+                        )
+                    }
+                    true
+                }
+            }
+
             UniqueType.OneTimeRemovePolicyRefund -> {
                 val policyFilter = unique.params[0]
                 val refundPercentage = unique.params[1].toInt()
